@@ -28,6 +28,8 @@ y = np.array([[0,0,1,1]]).T
 np.random.seed(1)
 
 # initialize weights randomly with mean 0
+# Its dimension is (3,1) because we have 3 inputs and 1 output.
+# Thus, we want to connect every node in l0 to every node in l1, which requires a matrix of dimensionality (3,1). 
 syn0 = 2*np.random.random((3,1)) - 1
 
 # Save l1 values for later investigation
@@ -40,11 +42,12 @@ for iter in range(nIter):
     # forward propagation
     l0 = X;
     #Weigthed sum is used as input for the sigmoid function --> 
+    # "full batch" ... use all data for parameter estimation
     l1 = nonlin(np.dot(l0,syn0)) 
     l1Array[iter,]  = l1.T;
     
    
-    
+
     # how much did we miss
     l1_error = y - l1
     l1Error[iter,]  = l1_error.T;
@@ -81,3 +84,6 @@ syn0
 xTest = np.linspace(-5,5,100);
 plt.figure()
 plt.plot(xTest,nonlin(xTest))
+
+plt.figure()
+plt.plot(xTest,nonlin(xTest,True))
